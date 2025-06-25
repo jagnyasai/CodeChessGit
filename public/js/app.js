@@ -156,12 +156,12 @@ class App {
         const verifyHandleBtnNav = document.getElementById('verify-handle-btn-nav');
         if (verifyHandleBtnNav) {
             verifyHandleBtnNav.addEventListener('click', () => {
-                if (this.currentUser && !this.currentUser.isVerified) {
-                    this.showHandleModal();
-                } else if (!this.currentUser) {
-                    this.showNotification('Please log in first.', 'warning');
-                } else {
-                    this.showNotification('Your Codeforces handle is already verified!', 'success');
+                if (window.authController) {
+                    if (!window.authController.isVerified()) {
+                        window.authController.showHandleVerificationModal();
+                    } else {
+                        window.authController.showNotification('Your Codeforces handle is already verified!', 'success');
+                    }
                 }
             });
         }
