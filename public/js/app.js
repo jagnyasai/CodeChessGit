@@ -151,20 +151,6 @@ class App {
                 this.loadProfilePage();
             });
         }
-
-        // Verify Codeforces Handle button in dashboard
-        const verifyHandleBtnNav = document.getElementById('verify-handle-btn-nav');
-        if (verifyHandleBtnNav) {
-            verifyHandleBtnNav.addEventListener('click', () => {
-                if (window.authController) {
-                    if (!window.authController.isVerified()) {
-                        window.authController.showHandleVerificationModal();
-                    } else {
-                        window.authController.showNotification('Your Codeforces handle is already verified!', 'success');
-                    }
-                }
-            });
-        }
     }
 
     async checkAuthStatus() {
@@ -369,19 +355,6 @@ class App {
             case 'dashboard':
                 if (window.dashboardController) {
                     window.dashboardController.init();
-                }
-                // Attach verify handle button event listener every time dashboard is shown
-                const verifyHandleBtnNav = document.getElementById('verify-handle-btn-nav');
-                if (verifyHandleBtnNav) {
-                    verifyHandleBtnNav.onclick = () => {
-                        if (this.currentUser && !this.currentUser.isVerified) {
-                            this.showHandleModal();
-                        } else if (!this.currentUser) {
-                            this.showNotification('Please log in first.', 'warning');
-                        } else {
-                            this.showNotification('Your Codeforces handle is already verified!', 'success');
-                        }
-                    };
                 }
                 break;
             case 'leaderboard':
@@ -785,16 +758,4 @@ const notificationStyles = `
 
 const styleSheet = document.createElement('style');
 styleSheet.textContent = notificationStyles;
-document.head.appendChild(styleSheet);
-
-document.addEventListener('click', function(e) {
-    if (e.target && e.target.id === 'verify-handle-btn-nav') {
-        if (window.authController) {
-            if (!window.authController.isVerified()) {
-                window.authController.showHandleVerificationModal();
-            } else {
-                window.authController.showNotification('Your Codeforces handle is already verified!', 'success');
-            }
-        }
-    }
-}); 
+document.head.appendChild(styleSheet); 

@@ -460,5 +460,21 @@
     <script src="js/contests.js"></script>
     <script src="js/problems.js"></script>
     <script src="js/socket.js"></script>
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var btn = document.getElementById('verify-handle-btn-nav');
+        if (btn) {
+            btn.onclick = function() {
+                if (window.authController) {
+                    if (!window.authController.isVerified()) {
+                        window.authController.showHandleVerificationModal();
+                    } else {
+                        window.authController.showNotification('Your Codeforces handle is already verified!', 'success');
+                    }
+                }
+            };
+        }
+    });
+    </script>
 </body>
 </html> 
