@@ -370,6 +370,19 @@ class App {
                 if (window.dashboardController) {
                     window.dashboardController.init();
                 }
+                // Attach verify handle button event listener every time dashboard is shown
+                const verifyHandleBtnNav = document.getElementById('verify-handle-btn-nav');
+                if (verifyHandleBtnNav) {
+                    verifyHandleBtnNav.onclick = () => {
+                        if (this.currentUser && !this.currentUser.isVerified) {
+                            this.showHandleModal();
+                        } else if (!this.currentUser) {
+                            this.showNotification('Please log in first.', 'warning');
+                        } else {
+                            this.showNotification('Your Codeforces handle is already verified!', 'success');
+                        }
+                    };
+                }
                 break;
             case 'leaderboard':
                 if (window.leaderboardController) {
