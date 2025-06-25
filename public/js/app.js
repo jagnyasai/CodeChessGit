@@ -785,4 +785,16 @@ const notificationStyles = `
 
 const styleSheet = document.createElement('style');
 styleSheet.textContent = notificationStyles;
-document.head.appendChild(styleSheet); 
+document.head.appendChild(styleSheet);
+
+document.addEventListener('click', function(e) {
+    if (e.target && e.target.id === 'verify-handle-btn-nav') {
+        if (window.authController) {
+            if (!window.authController.isVerified()) {
+                window.authController.showHandleVerificationModal();
+            } else {
+                window.authController.showNotification('Your Codeforces handle is already verified!', 'success');
+            }
+        }
+    }
+}); 
