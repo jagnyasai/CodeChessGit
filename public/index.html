@@ -466,11 +466,16 @@
         if (btn) {
             btn.onclick = function() {
                 if (window.authController) {
-                    if (!window.authController.isVerified()) {
-                        window.authController.showHandleVerificationModal();
-                    } else {
-                        window.authController.showNotification('Your Codeforces handle is already verified!', 'success');
+                    // If not authenticated, prompt login
+                    if (!window.authController.isAuthenticated()) {
+                        window.authController.showNotification('Please log in to verify your Codeforces handle.', 'warning');
+                        window.authController.login();
+                        return;
                     }
+                    // If not verified, open the modal
+                    window.authController.showHandleVerificationModal();
+                } else {
+                    alert('Authentication controller not loaded. Please refresh the page.');
                 }
             };
         }

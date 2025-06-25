@@ -140,13 +140,18 @@ class AuthController {
     }
 
     showHandleVerificationModal() {
+        // Hide all other modals
+        document.querySelectorAll('#modal-overlay .modal').forEach(modal => {
+            modal.style.display = 'none';
+        });
         const modal = document.getElementById('handle-modal');
         const overlay = document.getElementById('modal-overlay');
-        
         if (modal && overlay) {
             overlay.classList.add('active');
+            overlay.style.display = 'block';
             modal.style.display = 'block';
-            
+            modal.style.zIndex = 99999;
+            overlay.style.zIndex = 99998;
             // Focus on input
             const handleInput = document.getElementById('handle-input');
             if (handleInput) {
@@ -158,9 +163,9 @@ class AuthController {
     hideHandleVerificationModal() {
         const modal = document.getElementById('handle-modal');
         const overlay = document.getElementById('modal-overlay');
-        
         if (modal && overlay) {
             overlay.classList.remove('active');
+            overlay.style.display = 'none';
             modal.style.display = 'none';
         }
     }
