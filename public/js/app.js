@@ -89,7 +89,11 @@ class App {
         if (getStartedBtn) {
             getStartedBtn.addEventListener('click', () => {
                 if (this.currentUser) {
-                    this.navigateToPage('dashboard');
+                    if (!this.currentUser.isVerified) {
+                        this.showHandleModal();
+                    } else {
+                        this.navigateToPage('dashboard');
+                    }
                 } else {
                     window.location.href = '/auth/google';
                 }
