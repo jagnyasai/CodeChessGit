@@ -45,17 +45,44 @@ class App {
         const navToggle = document.getElementById('nav-toggle');
         const navMenu = document.getElementById('nav-menu');
 
+        // Debug: log when window width becomes less than 1024
+        window.addEventListener('resize', () => {
+            if (window.innerWidth < 1024) {
+                console.log('Window width is less than 1024px');
+                if (navToggle) {
+                    console.log('Hamburger icon is now visible');
+                }
+            }
+        });
+        // Initial check
+        if (window.innerWidth < 1024 && navToggle) {
+            console.log('Window width is less than 1024px (on load)');
+            console.log('Hamburger icon is now visible');
+        }
+
         navLinks.forEach(link => {
             link.addEventListener('click', (e) => {
                 e.preventDefault();
                 const page = link.dataset.page;
                 this.navigateToPage(page);
+                // Close menu on mobile after click
+                if (window.innerWidth < 1024) {
+                    navMenu.classList.remove('active');
+                    navToggle.classList.remove('active');
+                    console.log('Menu closed (nav link click)');
+                }
             });
         });
 
         navToggle.addEventListener('click', () => {
             navMenu.classList.toggle('active');
             navToggle.classList.toggle('active');
+            console.log('Hamburger icon clicked');
+            if (navMenu.classList.contains('active')) {
+                console.log('Menu opened');
+            } else {
+                console.log('Menu closed');
+            }
         });
 
         // Close mobile menu when clicking outside
@@ -63,6 +90,20 @@ class App {
             if (!e.target.closest('.navbar')) {
                 navMenu.classList.remove('active');
                 navToggle.classList.remove('active');
+                if (window.innerWidth < 1024) {
+                    console.log('Menu closed (outside click)');
+                }
+            }
+        });
+
+        // Robust: Close menu on mobile after any nav-link click (event delegation)
+        document.getElementById('nav-menu').addEventListener('click', function(e) {
+            if (e.target.classList.contains('nav-link')) {
+                if (window.innerWidth < 1024) {
+                    document.getElementById('nav-menu').classList.remove('active');
+                    document.getElementById('nav-toggle').classList.remove('active');
+                    console.log('Menu closed (nav link click - delegated)');
+                }
             }
         });
     }
