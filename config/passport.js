@@ -25,7 +25,6 @@ module.exports = function(passport) {
             email: profile.emails[0].value,
             avatar: profile.photos[0].value,
             isVerified: false,
-            codeforcesHandle: null,
             rating: 0,
             solvedProblems: [],
             gamesPlayed: 0,
